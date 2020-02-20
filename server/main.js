@@ -3,6 +3,10 @@ import express from "express";
 import cors from "cors";
 import bp from "body-parser";
 import DbContext from "./db/dbConfig";
+import StudentController from "./controllers/StudentsController";
+import AssignmentsController from "./controllers/AssignmentsController";
+import SubjectsController from "./controllers/SubjectsController";
+import SubmissionsController from "./controllers/SubmissionsController";
 
 const port = process.env.PORT || 3000;
 
@@ -31,6 +35,11 @@ server.use(bp.urlencoded({ extended: true }));
 server.use(bp.json());
 
 //NOTE Everything above this line always stays the same
+
+server.use("/api/students", new StudentController().router);
+server.use("/api/assignments", new AssignmentsController().router);
+server.use("/api/subjects", new SubjectsController().router);
+server.use("/api/submissions", new SubmissionsController().router);
 
 //NOTE Everything below this line always stays the same
 
