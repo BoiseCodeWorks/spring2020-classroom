@@ -1,5 +1,6 @@
 import express from "express";
 import assignmentsService from "../services/AssignmentsService";
+import submissionsService from "../services/SubmissionsService";
 
 export default class AssignmentsController {
   constructor() {
@@ -7,6 +8,7 @@ export default class AssignmentsController {
       .Router()
       .get("", this.getAll)
       .get("/:id", this.getById)
+      .get("/:id/submissions", this.getSubmissionsByAssignment)
       .post("", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.delete);
@@ -18,6 +20,15 @@ export default class AssignmentsController {
       return res.send(data);
     } catch (error) {
       next(error);
+    }
+  }
+
+  async getSubmissionsByAssignment(req, res, next) {
+    try {
+      let data = await submissionsService.getByAssignmentId(req.params.id);
+      return res.send(data);
+    } catch (e) {
+      next(e);
     }
   }
 

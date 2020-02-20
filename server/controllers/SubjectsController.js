@@ -2,11 +2,15 @@ import express from "express";
 import subjectsService from "../services/SubjectsService";
 
 export default class SubjectsController {
+  getSubmissionsBySubjectId(arg0, getSubmissionsBySubjectId) {
+    throw new Error("Method not implemented.");
+  }
   constructor() {
     this.router = express
       .Router()
       .get("", this.getAll)
       .get("/:id", this.getById)
+      .get("/:id/submissions", this.getSubmissionsBySubjectId)
       .post("", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.delete);
