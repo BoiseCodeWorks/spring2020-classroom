@@ -17,7 +17,7 @@ class AssignmentsService {
     return await _repository.findByIdAndDelete(id);
   }
   async getAll() {
-    return await _repository.find({});
+    return await _repository.find({}).populate("subjectId");
   }
 }
 
