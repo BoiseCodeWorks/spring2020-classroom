@@ -1,5 +1,6 @@
 import express from "express";
 import studentsService from "../services/StudentsService";
+import submissionsService from "../services/SubmissionsService";
 
 export default class StudentController {
   constructor() {
@@ -7,6 +8,7 @@ export default class StudentController {
       .Router()
       .get("", this.getAll)
       .get("/:id", this.getById)
+      .get("/:id/submissions", this.getSubmissionsByStudentId)
       .post("", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.delete);
@@ -24,6 +26,15 @@ export default class StudentController {
   async getById(req, res, next) {
     try {
       let data = await studentsService.getById(req.params.id);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getSubmissionsByStudentId(req, res, next) {
+    try {
+      let data = await submissionsService.getByStudentId(req.params.id);
       return res.send(data);
     } catch (error) {
       next(error);

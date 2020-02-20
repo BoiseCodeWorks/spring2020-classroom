@@ -1,10 +1,8 @@
 import express from "express";
 import subjectsService from "../services/SubjectsService";
+import submissionsService from "../services/SubmissionsService";
 
 export default class SubjectsController {
-  getSubmissionsBySubjectId(arg0, getSubmissionsBySubjectId) {
-    throw new Error("Method not implemented.");
-  }
   constructor() {
     this.router = express
       .Router()
@@ -16,6 +14,14 @@ export default class SubjectsController {
       .delete("/:id", this.delete);
   }
 
+  async getSubmissionsBySubjectId(req, res, next) {
+    try {
+      let data = await submissionsService.getBySubjectId(req.params.id);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
   async getAll(req, res, next) {
     try {
       let data = await subjectsService.getAll();
