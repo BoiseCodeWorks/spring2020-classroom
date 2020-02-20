@@ -1,6 +1,7 @@
 import express from "express";
 import subjectsService from "../services/SubjectsService";
 import submissionsService from "../services/SubmissionsService";
+import assignmentsService from "../services/AssignmentsService";
 
 export default class SubjectsController {
   constructor() {
@@ -9,6 +10,7 @@ export default class SubjectsController {
       .get("", this.getAll)
       .get("/:id", this.getById)
       .get("/:id/submissions", this.getSubmissionsBySubjectId)
+      .get("/:id/assignments", this.getAssignmentsBySubjectId)
       .post("", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.delete);
@@ -17,6 +19,14 @@ export default class SubjectsController {
   async getSubmissionsBySubjectId(req, res, next) {
     try {
       let data = await submissionsService.getBySubjectId(req.params.id);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getAssignmentsBySubjectId(req, res, next) {
+    try {
+      let data = await assignmentsService.getBySubjectId(req.params.id);
       return res.send(data);
     } catch (error) {
       next(error);

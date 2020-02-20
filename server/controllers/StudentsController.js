@@ -11,6 +11,7 @@ export default class StudentController {
       .get("/:id/submissions", this.getSubmissionsByStudentId)
       .post("", this.create)
       .put("/:id", this.edit)
+      .put("/:id/addSubject/:subjectId", this.addSubject)
       .delete("/:id", this.delete);
   }
 
@@ -58,6 +59,16 @@ export default class StudentController {
     }
   }
 
+  async addSubject(req, res, next) {
+    try {
+      let data = await studentsService.addSubject(
+        req.params.id,
+        req.params.subjectId
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
   async delete(req, res, next) {
     try {
       await studentsService.delete(req.params.id);

@@ -7,6 +7,10 @@ class AssignmentsService {
   async getById(id) {
     return await _repository.findById(id);
   }
+
+  async getBySubjectId(subjectId) {
+    return await _repository.find({ subjectId });
+  }
   async create(body) {
     return await _repository.create(body);
   }
